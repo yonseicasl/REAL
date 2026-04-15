@@ -5,11 +5,10 @@ The growing sequence length of large language models poses significant challenge
 ## Table of Contents
 
 - [Updated Timeline](#updated-timeline)
-- [Repository Structure](#repository-structure)
+- [Note](#note)
 - [Environment Setup](#environment-setup)
-- [Download Model Weights](#download-model-weights)
-- [Download Datasets](#download-datasets)
-- [Run Multiple-Behavior Head Detection](#run-multiple-behavior-head-detection)
+- [Download Model Weights and Datasets](#download-model-weights-and-datasets)
+- [Workflow](#workflow)
 
 ---
 ## Updated Timeline
@@ -18,21 +17,9 @@ The growing sequence length of large language models poses significant challenge
 
 ---
 
-## Repository Structure
+## Note
 
-```
-REAL/
-├── Important_Head/
-│   ├── retrieval_head_detection.py      # Main retrieval head detection script
-│   ├── retrieval_head_detection_r2.py   # Extended version with additional needle types
-│   ├── haystack_for_detect/             # Needle-in-a-haystack data 
-│   └── haystack_for_detect_r2/          # Needle-in-a-haystack data 
-├── csrc/                                # CUDA extension source
-├── requirements.txt                     # Python dependencies
-└── *.sh                                 # Shell scripts for running experiments
-```
-
-> **Note:** The `data/` directory (LongBench datasets) and model weights are not included in this repository due to file size limits. Follow the instructions below to download them.
+⚠️ The `data/` directory (LongBench datasets) and model weights are not included in this repository due to file size limits. Follow the instructions below to download them.
 
 ---
 
@@ -61,14 +48,16 @@ cd ..
 
 ---
 
-## Download Model Weights
+## Download Model Weights and Datasets
+
+### Download Model Weights
 
 | Item | Source | Size |
 |------|--------|------|
 | Meta-Llama-3-8B-Instruct | [HuggingFace](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)  | ~16 GB
 | Mistral-7B-Instruct-v0.2 | [HuggingFace](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2) | ~14 GB |
 
-### Meta-Llama-3-8B-Instruct
+#### Meta-Llama-3-8B-Instruct
 
 ```bash
 huggingface-cli download meta-llama/Meta-Llama-3-8B-Instruct \
@@ -84,10 +73,9 @@ snapshot_download(repo_id="meta-llama/Meta-Llama-3-8B-Instruct",
 ```
 
 
-### Mistral-7B-Instruct-v0.2
+#### Mistral-7B-Instruct-v0.2
 
 ```bash
-pip install huggingface_hub
 huggingface-cli download mistralai/Mistral-7B-Instruct-v0.2 \
     --local-dir ./Mistral-7B-Instruct-v0.2
 ```
@@ -159,27 +147,42 @@ EOF
 
 ---
 
-## Run Multiple-Behavior Head Detection
+## Workflow
+
+### 1. Compute INFsc
 
 ```bash
-python Important_Head/retrieval_head_detection.py \
-    --model_path ./Mistral-7B-Instruct-v0.2 \
-    --s_len 0 \
-    --e_len 128000
+python structure_head_InfScore.py --model meta-llama/Meta-Llama-3-8B-Instruct --max_len 2048 --depths 15
+```
+
+### 2. Allocate KV budget
+```bash
+ ./head_base.sh 0 ReasonKV 0.1 flash_attention_2 meta-llama/Meta-Llama-3-8B-Instruct reason 1.351 0.98
 ```
 
 ```bash
-python Important_Head/retrieval_head_detection_r2.py \
-    --model_path ./Mistral-7B-Instruct-v0.2 \
-    --s_len 0 \
-    --e_len 128000
+ ./InfKV_head_base.sh 0 InfKV 128 flash_attention_2 meta-llama/Meta-Llama-3-8B-Instruct 1.5 1
 ```
-
-Or use the provided shell scripts:
+### 3. Inference
+```bash
+./head_base.sh 0 ReasonKV 0.05 flash_attention_2 meta-llama/Meta-Llama-3-8B-Instruct reason 1 1
+```
+### 4. Evaluate
+```bash
+python InfKV_eval.py \
+    --results_dir results_long_bench_reason_base0.1_beta1.351_temp0.98 \
+    --model Meta-Llama-3-8B-Instruct \
+    --capacity_ratio 0.1
+```
 
 ```bash
-bash head_start_mistral.sh
-bash head_start_llama.sh
+python eval.py \
+    --results_dir HeadKV/results/results_long_bench_reason_base128_beta1.351_temp0.98 \
+    --model meta-llama-3-8b-instruct \
+    --capacity 128
 ```
+
+
+
 
 
