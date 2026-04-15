@@ -1,5 +1,7 @@
 # REAL: REtrieval-reAsoning and Logic-constructed Attention Behaviors for Long-Context KV Cache Compression
 
+The growing sequence length of large language models poses significant challenges for key-value caches. Existing state-of-the-art cache eviction methods primarily analyze the inference behavior of attention heads in successful retrieval-reasoning cases, often overlooking diverse behaviors in failure cases, such as bias and distraction. This oversight limits the potential to leverage heterogeneous head behaviors for improved eviction performance. Inspired by the confusion matrix, we introduce an Attention Behavior Matrix to comprehensively analyze attention head behaviors in both success and failure scenarios. By maximizing the signal-to-noise ratio — strengthening valid reasoning pathways in success cases while inhibiting noise from bias and distraction in failure cases — we propose REtrieval-reAsoning and Logic-constructed (REAL). REAL is the first KV cache eviction method that leverages multi-behavior analysis.
+
 ## Table of Contents
 
 - [Updated Timeline](#updated-timeline)
