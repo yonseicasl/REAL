@@ -7,7 +7,6 @@
 - [Download Model Weights](#download-model-weights)
 - [Download Datasets](#download-datasets)
 - [Run Multiple-Behavior Head Detection](#run-multiple-behavior-head-detection)
-- [Requirements Summary](#requirements-summary)
 
 ---
 
@@ -18,8 +17,8 @@ REAL/
 ├── Important_Head/
 │   ├── retrieval_head_detection.py      # Main retrieval head detection script
 │   ├── retrieval_head_detection_r2.py   # Extended version with additional needle types
-│   ├── haystack_for_detect/             # Needle-in-a-haystack data (v1)
-│   └── haystack_for_detect_r2/          # Needle-in-a-haystack data (v2)
+│   ├── haystack_for_detect/             # Needle-in-a-haystack data 
+│   └── haystack_for_detect_r2/          # Needle-in-a-haystack data 
 ├── csrc/                                # CUDA extension source
 ├── requirements.txt                     # Python dependencies
 └── *.sh                                 # Shell scripts for running experiments
@@ -56,7 +55,28 @@ cd ..
 
 ## Download Model Weights
 
-Download **Mistral-7B-Instruct-v0.2** from HuggingFace:
+| Item | Source | Size |
+|------|--------|------|
+| Meta-Llama-3-8B-Instruct | [HuggingFace](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)  | ~16 GB
+| Mistral-7B-Instruct-v0.2 | [HuggingFace](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2) | ~14 GB |
+
+### Meta-Llama-3-8B-Instruct
+
+```bash
+huggingface-cli download meta-llama/Meta-Llama-3-8B-Instruct \
+    --local-dir ./Meta-Llama-3-8B-Instruct
+```
+
+Or using Python:
+
+```python
+from huggingface_hub import snapshot_download
+snapshot_download(repo_id="meta-llama/Meta-Llama-3-8B-Instruct",
+                  local_dir="./Meta-Llama-3-8B-Instruct")
+```
+
+
+### Mistral-7B-Instruct-v0.2
 
 ```bash
 pip install huggingface_hub
@@ -72,9 +92,15 @@ snapshot_download(repo_id="mistralai/Mistral-7B-Instruct-v0.2",
                   local_dir="./Mistral-7B-Instruct-v0.2")
 ```
 
+
 ---
 
 ## Download Datasets
+
+| Item | Source | Size |
+|------|--------|------|
+| LongBench | [HuggingFace](https://huggingface.co/datasets/THUDM/LongBench) | ~500 MB |
+| LongBench v2 | [HuggingFace](https://huggingface.co/datasets/THUDM/LongBench-v2) | ~200 MB |
 
 ### LongBench
 
@@ -148,12 +174,4 @@ bash head_start_mistral.sh
 bash head_start_llama.sh
 ```
 
----
 
-## Requirements Summary
-
-| Item | Source | Size |
-|------|--------|------|
-| Mistral-7B-Instruct-v0.2 | [HuggingFace](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2) | ~14 GB |
-| LongBench | [HuggingFace](https://huggingface.co/datasets/THUDM/LongBench) | ~500 MB |
-| LongBench v2 | [HuggingFace](https://huggingface.co/datasets/THUDM/LongBench-v2) | ~200 MB |
