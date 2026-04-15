@@ -2,11 +2,17 @@
 
 ## Table of Contents
 
+- [Updated Timeline](#updated-timeline)
 - [Repository Structure](#repository-structure)
 - [Environment Setup](#environment-setup)
 - [Download Model Weights](#download-model-weights)
 - [Download Datasets](#download-datasets)
 - [Run Multiple-Behavior Head Detection](#run-multiple-behavior-head-detection)
+
+---
+## Updated Timeline
+
+😊 [2026.4.15] Source Code Commitment. 
 
 ---
 
