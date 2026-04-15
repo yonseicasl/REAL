@@ -89,8 +89,6 @@ snapshot_download(repo_id="mistralai/Mistral-7B-Instruct-v0.2",
 ```
 
 
----
-
 ### 2. Download Datasets
 
 | Item | Source | Size |
