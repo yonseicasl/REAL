@@ -1,6 +1,13 @@
-# REAL: Retrieval Head Detection
+# REAL: REtrieval-reAsoning and Logic-constructed Attention Behaviors for Long-Context KV Cache Compression
 
-This repository contains scripts for detecting retrieval heads in large language models.
+## Table of Contents
+
+- [Repository Structure](#repository-structure)
+- [Environment Setup](#environment-setup)
+- [Download Model Weights](#download-model-weights)
+- [Download Datasets](#download-datasets)
+- [Run Multiple-Behavior Head Detection](#run-multiple-behavior-head-detection)
+- [Requirements Summary](#requirements-summary)
 
 ---
 
@@ -31,22 +38,13 @@ git clone https://github.com/yonseicasl/REAL.git
 cd REAL
 ```
 
-### 2. Create a Python virtual environment
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Install dependencies
+### 2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-> Key dependencies: `torch==2.6.0+cu118`, `transformers==4.37.0`, `flash-attn==2.7.2`, `datasets==3.5.0`
-
-### 4. Build the CUDA extension
+### 3. Build the CUDA extension
 
 ```bash
 cd csrc
@@ -78,7 +76,7 @@ snapshot_download(repo_id="mistralai/Mistral-7B-Instruct-v0.2",
 
 ## Download Datasets
 
-### LongBench (v1)
+### LongBench
 
 ```bash
 mkdir -p data/LongBench
@@ -127,9 +125,7 @@ EOF
 
 ---
 
-## Run Retrieval Head Detection
-
-### Version 1 (retrieval_head_detection.py)
+## Run Multiple-Behavior Head Detection
 
 ```bash
 python Important_Head/retrieval_head_detection.py \
@@ -137,8 +133,6 @@ python Important_Head/retrieval_head_detection.py \
     --s_len 0 \
     --e_len 128000
 ```
-
-### Version 2 (retrieval_head_detection_r2.py)
 
 ```bash
 python Important_Head/retrieval_head_detection_r2.py \
@@ -161,6 +155,5 @@ bash head_start_llama.sh
 | Item | Source | Size |
 |------|--------|------|
 | Mistral-7B-Instruct-v0.2 | [HuggingFace](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2) | ~14 GB |
-| LongBench v1 | [HuggingFace](https://huggingface.co/datasets/THUDM/LongBench) | ~500 MB |
+| LongBench | [HuggingFace](https://huggingface.co/datasets/THUDM/LongBench) | ~500 MB |
 | LongBench v2 | [HuggingFace](https://huggingface.co/datasets/THUDM/LongBench-v2) | ~200 MB |
-| GPU | NVIDIA GPU with CUDA 11.8+ | ≥ 24 GB VRAM recommended |
