@@ -19,7 +19,7 @@ The growing sequence length of large language models poses significant challenge
 
 ## Note
 
-⚠️ The `data/` directory (LongBench datasets) and model weights are not included in this repository due to file size limits. Follow the instructions below to download them.
+⚠️ The `data/` directory and model weights are not included in this repository due to file size limits. Follow the instructions below to download them.
 
 ---
 
