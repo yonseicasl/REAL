@@ -50,7 +50,7 @@ cd ..
 
 ## Download Model Weights and Datasets
 
-### Download Model Weights
+### 1. Download Model Weights
 
 | Item | Source | Size |
 |------|--------|------|
@@ -91,14 +91,14 @@ snapshot_download(repo_id="mistralai/Mistral-7B-Instruct-v0.2",
 
 ---
 
-## Download Datasets
+### 2. Download Datasets
 
 | Item | Source | Size |
 |------|--------|------|
 | LongBench | [HuggingFace](https://huggingface.co/datasets/THUDM/LongBench) | ~500 MB |
 | LongBench v2 | [HuggingFace](https://huggingface.co/datasets/THUDM/LongBench-v2) | ~200 MB |
 
-### LongBench
+#### LongBench
 
 ```bash
 mkdir -p data/LongBench
@@ -122,7 +122,7 @@ for task in tasks:
 EOF
 ```
 
-### LongBench v2
+#### LongBench v2
 
 ```bash
 mkdir -p data/longbenchv2
