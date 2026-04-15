@@ -1,0 +1,38 @@
+# 模型文件
+Mistral-7B-Instruct-v0.2/
+*.bin
+*.safetensors
+*.pt
+*.pth
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+
+# 安装包
+*.whl
+*.egg
+*.egg-info/
+dist/
+
+# 编译文件
+*.so
+
+# 数据文件（大型二进制）
+*.arrow
+*.lock
+
+# 数据集（含超大文件）
+data/
+
+# 日志与结果
+logs/
+results/
+*.log
+
+# 编辑器
+.DS_Store
+*.swp
